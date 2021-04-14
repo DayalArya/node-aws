@@ -1,9 +1,14 @@
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
+const http = require('http');
+const app = require('./app.js');
+const dotenv = require('dotenv');
+const connectDB = require('./config/database');
 
-app.get('/', (req, res, next) => {
-    res.send({ message: "Hello, World" });
+dotenv.config();
+
+const PORT = process.env.PORT || 3001;
+const server = http.createServer(app);
+
+server.listen(PORT, () => {
+    connectDB();
+    console.log(`server started on the port ${PORT}`);
 });
-
-app.listen(PORT, () => console.log(`Server listening on port: ${PORT}`));
